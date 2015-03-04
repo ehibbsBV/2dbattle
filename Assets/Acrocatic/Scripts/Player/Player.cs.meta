@@ -1,0 +1,43 @@
+fileFormatVersion: 2
+guid: 41ef61f9668a849ac8170ae0bd5a86c4
+labels:
+- acrocatic
+- platformer
+- customize
+- character
+- controller
+- platforming
+- moving
+- sinking
+- 2d
+- acrobatic
+- run
+- walk
+- dash
+- jump
+- crouch
+- slide
+- ladder
+- climb
+- platform
+- move
+- boomerang
+- wall
+- walljump
+- wallslide
+- wallrun
+- sprite
+- animator
+- doublejump
+- hitbox
+- collider
+- airdash
+- sink
+- camera
+- shake
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

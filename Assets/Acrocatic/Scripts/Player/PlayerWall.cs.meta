@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 8db075ecc38f74b508ee62749173800e
+labels:
+- wallrun
+- wallslide
+- walljump
+- wall
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
