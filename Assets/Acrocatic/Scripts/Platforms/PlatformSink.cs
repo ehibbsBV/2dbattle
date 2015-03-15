@@ -57,7 +57,7 @@ public class PlatformSink : MonoBehaviour {
 	// Function to make the platform sink.
 	public void Sink() {
 		sinking = true;
-		rigidbody2D.isKinematic = false;
+		GetComponent<Rigidbody2D>().isKinematic = false;
 	}
 
 	// Function to start the sinking timer.

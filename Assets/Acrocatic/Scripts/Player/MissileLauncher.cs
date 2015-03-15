@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MissileLauncher : MonoBehaviour {
+public class ProjectileWeapon : MonoBehaviour {
 
 
   public GameObject firePoint;

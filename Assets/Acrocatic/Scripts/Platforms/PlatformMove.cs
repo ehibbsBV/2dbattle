@@ -72,10 +72,10 @@ public class PlatformMove : MonoBehaviour {
 	void FixedUpdate() {
 		if (stop) {
 			// Stop the platform.
-			parent.rigidbody2D.velocity = new Vector2(0, 0);
+			parent.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 		} else {
 			// Move the platform to the next waypoint.
-			parent.rigidbody2D.velocity = nextVelocity * speed;
+			parent.GetComponent<Rigidbody2D>().velocity = nextVelocity * speed;
 		}
 	}
 

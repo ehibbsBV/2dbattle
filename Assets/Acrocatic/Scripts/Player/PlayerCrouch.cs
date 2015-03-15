@@ -105,14 +105,14 @@ public class PlayerCrouch : MonoBehaviour {
 				player.SetYVelocity(0);
 				
 				// Add an X and Y force to the rigid body to actually perform the slide.
-				rigidbody2D.AddForce(new Vector2((player.facingRight ? 1 : -1) * airSlideForce.x, airSlideForce.y));
+				GetComponent<Rigidbody2D>().AddForce(new Vector2((player.facingRight ? 1 : -1) * airSlideForce.x, airSlideForce.y));
 			// Or else...
 			} else {
 				// ... reset the X velocity.
 				player.SetXVelocity(0);
 				
 				// Add an X force to the rigid body to actually perform the slide.
-				rigidbody2D.AddForce(new Vector2((player.facingRight ? 1 : -1) * slideForce, 0f));
+				GetComponent<Rigidbody2D>().AddForce(new Vector2((player.facingRight ? 1 : -1) * slideForce, 0f));
 			}
 			
 			// Reset the slide timers.

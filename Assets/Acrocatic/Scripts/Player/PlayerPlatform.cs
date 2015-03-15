@@ -125,12 +125,12 @@ public class PlayerPlatform : MonoBehaviour {
 		// Make the player sticky to the moving platform.
 		if (OnMovingPlatform()) {
 			// Cache the platform's velocity.
-			Vector2 platformVelocity = currentPlatform.rigidbody2D.velocity;
+			Vector2 platformVelocity = currentPlatform.GetComponent<Rigidbody2D>().velocity;
 			
 			// If the player should stick to the X velocity of the platform...
 			if (movingPlatform.stickToX && !unstick) {
 				// ... cache the player's X velocity.
-				float xVel = rigidbody2D.velocity.x;
+				float xVel = GetComponent<Rigidbody2D>().velocity.x;
 				// Get the player's speed.
 				float speed = player.GetSpeed(false);
 				// Set the min and max velocity.

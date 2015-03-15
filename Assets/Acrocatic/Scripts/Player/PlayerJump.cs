@@ -100,7 +100,7 @@ public class PlayerJump : MonoBehaviour {
 			// If the player is not grounded and totalJumps is higher than 1...
 			} else if(doubleJumping.totalJumps > 1) {
 				// ... initialize jump if the Y velocity is inside the double jump window (or when there isn't a window).
-				if (!doubleJumping.jumpWindow || (doubleJumping.jumpWindow && rigidbody2D.velocity.y > doubleJumping.jumpWindowMin && rigidbody2D.velocity.y < doubleJumping.jumpWindowMax)) {
+				if (!doubleJumping.jumpWindow || (doubleJumping.jumpWindow && GetComponent<Rigidbody2D>().velocity.y > doubleJumping.jumpWindowMin && GetComponent<Rigidbody2D>().velocity.y < doubleJumping.jumpWindowMax)) {
 					doubleJump = true;
 					InitJump();
 				}
@@ -147,9 +147,9 @@ public class PlayerJump : MonoBehaviour {
 						// ... get the current platform.
 						GameObject platform = player.GetPlatform();
 						// If the platform's Y velocity is greater than 0...
-						if (platform.rigidbody2D.velocity.y > 0) {
+						if (platform.GetComponent<Rigidbody2D>().velocity.y > 0) {
 							// ... make sure the y velocity of this platform is taken into account when jumping.
-							yVel += platform.rigidbody2D.velocity.y;
+							yVel += platform.GetComponent<Rigidbody2D>().velocity.y;
 						}
 					}
 
@@ -170,7 +170,7 @@ public class PlayerJump : MonoBehaviour {
 					jumpTimer -= Time.deltaTime;
 
 					// Set the Y Force for the player.
-					rigidbody2D.AddForce(new Vector2(0f, jumpFactor * (doubleJump ? holdToJumpHigher.doubleJumpForce : holdToJumpHigher.jumpForce)));
+					GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpFactor * (doubleJump ? holdToJumpHigher.doubleJumpForce : holdToJumpHigher.jumpForce)));
 				// When the timer is finished or the jump button isn't being pressed...
 				} else {
 					// ... reset the jumping variables.
@@ -179,7 +179,7 @@ public class PlayerJump : MonoBehaviour {
 			// Or else if you need a single press to perform a jump...
 			} else {
 				// Add a vertical force to the player.
-				rigidbody2D.AddForce(new Vector2(0f, jumpFactor * (doubleJump ? singlePressToJump.doubleJumpForce : singlePressToJump.jumpForce)));
+				GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpFactor * (doubleJump ? singlePressToJump.doubleJumpForce : singlePressToJump.jumpForce)));
 
 				// If the player is on a platform...
 				if (player.OnPlatform()) {

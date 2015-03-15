@@ -80,26 +80,26 @@ public class PlayerHitbox : MonoBehaviour {
 		switch(type) {
 			case "default":
 				boxCollider.size = defaultHitbox.boxSize;
-				boxCollider.center = defaultHitbox.boxCenter;
+				boxCollider.offset = defaultHitbox.boxCenter;
 				break;
 			case "crouch":
 				boxCollider.size = crouchHitbox.boxSize;
-				boxCollider.center = crouchHitbox.boxCenter;
+				boxCollider.offset = crouchHitbox.boxCenter;
 				break;
 			case "jump":
 				boxCollider.size = jumpHitbox.boxSize;
-				boxCollider.center = jumpHitbox.boxCenter;
+				boxCollider.offset = jumpHitbox.boxCenter;
 				break;
 		}
 
 		// Change the sideCheck position based on the player's hitbox.
 		Vector2 pos = transform.position;
 		if (player.facingRight) {
-			player.sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.center.x + (boxCollider.size.x / 2), pos.y + boxCollider.center.y + (boxCollider.size.y / 2));
-			player.sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.center.x + (boxCollider.size.x / 2) + 0.1f, pos.y + boxCollider.center.y - (boxCollider.size.y / 2));
+			player.sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.offset.x + (boxCollider.size.x / 2), pos.y + boxCollider.offset.y + (boxCollider.size.y / 2));
+			player.sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.offset.x + (boxCollider.size.x / 2) + 0.1f, pos.y + boxCollider.offset.y - (boxCollider.size.y / 2));
 		} else {
-			player.sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.center.x - (boxCollider.size.x / 2), pos.y + boxCollider.center.y + (boxCollider.size.y / 2));
-			player.sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.center.x - (boxCollider.size.x / 2) - 0.1f, pos.y + boxCollider.center.y - (boxCollider.size.y / 2));
+			player.sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.offset.x - (boxCollider.size.x / 2), pos.y + boxCollider.offset.y + (boxCollider.size.y / 2));
+			player.sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.offset.x - (boxCollider.size.x / 2) - 0.1f, pos.y + boxCollider.offset.y - (boxCollider.size.y / 2));
 		}
 	}
 

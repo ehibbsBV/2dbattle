@@ -67,7 +67,7 @@ public class PlayerDash : MonoBehaviour
 			dashAllowed = false;
 
 			// Reset the dash timer if the X velocity is 0.
-			if (rigidbody2D.velocity.x == 0) {
+			if (GetComponent<Rigidbody2D>().velocity.x == 0) {
 				dashTimer = 0;
 			}
 
@@ -133,7 +133,7 @@ public class PlayerDash : MonoBehaviour
 			player.SetXVelocity (0);
 
 			// Add an X force to the rigid body to actually perform the dash.
-			rigidbody2D.AddForce (new Vector2 ((player.facingRight ? 1 : -1) * dashForce, 0f));
+			GetComponent<Rigidbody2D>().AddForce (new Vector2 ((player.facingRight ? 1 : -1) * dashForce, 0f));
 
 			// Reset the dash timers.
 			dashTimer = dashTime;
@@ -155,7 +155,7 @@ public class PlayerDash : MonoBehaviour
 				// If the player is on a moving platform, make sure the extra Y velocity is added.
 				if (player.OnMovingPlatform ()) {
 					GameObject platform = player.GetPlatform ();
-					float yVel = platform.rigidbody2D.velocity.y;
+					float yVel = platform.GetComponent<Rigidbody2D>().velocity.y;
 					speed = speed + yVel;
 				}
 

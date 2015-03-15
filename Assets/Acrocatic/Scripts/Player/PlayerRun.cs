@@ -36,14 +36,14 @@ public class PlayerRun : MonoBehaviour {
 		// If the player is not stuck to the wall and the player is not dashing, sliding, crouching and/or on a ladder...
 		if (!player.stuckToWall && !player.dashing && !player.sliding && !player.crouching && !player.onLadder) {
 			// ... if the player is changing direction (h has a different sign to velocity.x) or hasn't reached speed yet...
-			if(player.hor * rigidbody2D.velocity.x < speed) {
+			if(player.hor * GetComponent<Rigidbody2D>().velocity.x < speed) {
 				// ... add a force to the player.
-				rigidbody2D.AddForce(transform.rotation * Vector2.right * player.hor * player.GetMovementForce(moveForce));
+				GetComponent<Rigidbody2D>().AddForce(transform.rotation * Vector2.right * player.hor * player.GetMovementForce(moveForce));
 			}
 			// If the player's horizontal velocity is greater than the speed and the player isn't stuck to the X of a platform...
-			if(Mathf.Abs(rigidbody2D.velocity.x) > speed && !player.IsStuckToPlatformX()) {
+			if(Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > speed && !player.IsStuckToPlatformX()) {
 				// ... set the player's velocity to the speed in the x axis.
-				player.SetXVelocity(Mathf.Sign(rigidbody2D.velocity.x) * speed);
+				player.SetXVelocity(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * speed);
 			}
 		}
 	}

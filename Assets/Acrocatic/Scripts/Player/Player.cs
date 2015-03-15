@@ -35,8 +35,13 @@ public class Player : MonoBehaviour {
 	public Transform groundCheck;				// A position marking to check if the player is grounded.
 	[HideInInspector]
 	public Collider2D groundCollider;			// Ground collider object.
-	
-	// Public variables.
+
+
+  // Public variables.
+  [Tooltip("You can enable this to keep the player's velocity when hitting the ground. This is experimental and currently defaults to false.")]
+  public bool keepVelocityOnGround = false;
+  [Tooltip("The timer used for the remembering the player's velocity when hitting the ground. Don't give this a high value.")]
+  public float groundedVelocityTime = 0.05f;
 	[Tooltip("Select the direction in which the sprites are facing.")]
 	public Direction spriteDirection;
 	[Tooltip("Select the layer that should be used for platforms.")]
@@ -58,8 +63,12 @@ public class Player : MonoBehaviour {
 	private Animator animator;					// The player's animator.
 	private bool flipAgain = false;				// Used to fix a bug.
 	private float gravityScale;					// Cache the initial gravity scale.
+  private Rigidbody2D rigidbody2d;            // Cached rigidbody
+  private float groundedXVelocity;            // Remember the X velocity when the player hits the ground.
+  private float groundedTimer;                // Timer for how long the player should ignore the friction when hitting the ground.
 
-	// Wall variables.
+
+  // Wall variables.
 	private bool wallSliding = false;			// These variables are used to remember the wall sliding, running and jumping variables.
 	private bool wallRunning = false;			// That's needed to show the correct animations.
 	private bool wallJumping = false;
@@ -78,8 +87,8 @@ public class Player : MonoBehaviour {
     var boxCollider = GetComponent<BoxCollider2D>();
 		// Change the sideCheck position based on direction the player is facing.
 		var pos = transform.position;
-		sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.center.x + (boxCollider.size.x / 2), pos.y + boxCollider.center.y + (boxCollider.size.y / 2));
-		sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.center.x + (boxCollider.size.x / 2) + 0.1f, pos.y + boxCollider.center.y - (boxCollider.size.y / 2));
+		sideCheckTop.transform.position = new Vector2 (pos.x + boxCollider.offset.x + (boxCollider.size.x / 2), pos.y + boxCollider.offset.y + (boxCollider.size.y / 2));
+		sideCheckBot.transform.position = new Vector2 (pos.x + boxCollider.offset.x + (boxCollider.size.x / 2) + 0.1f, pos.y + boxCollider.offset.y - (boxCollider.size.y / 2));
 	}
 
 
@@ -97,7 +106,9 @@ public class Player : MonoBehaviour {
     playerPlatform = GetComponent<PlayerPlatform>();
     normalRotation = transform.localRotation;
     animator = GetComponent<Animator>();
-    gravityScale = rigidbody2D.gravityScale;
+    gravityScale = GetComponent<Rigidbody2D>().gravityScale;
+		rigidbody2d = GetComponent<Rigidbody2D>();
+
   }
 
 	// This function is called every fixed framerate frame.
@@ -116,10 +127,10 @@ public class Player : MonoBehaviour {
 		// If the player is stuck to a wall or on a ladder.
 		if (stuckToWall || onLadder) {
 			// ... set the gravity scale to 0.
-			rigidbody2D.gravityScale = 0;
+			GetComponent<Rigidbody2D>().gravityScale = 0;
 		} else {
 			// Reset the gravity scale.
-			rigidbody2D.gravityScale = gravityScale;
+			GetComponent<Rigidbody2D>().gravityScale = gravityScale;
 		}
 	}
 
@@ -133,8 +144,8 @@ public class Player : MonoBehaviour {
     animator.SetBool("wall", stuckToWall);
     animator.SetBool("onLadder", onLadder);
     animator.SetFloat("horizontal", Mathf.Abs(hor));
-    animator.SetFloat("xSpeed",  Mathf.Abs(rigidbody2D.velocity.x));
-    animator.SetFloat("ySpeed", rigidbody2D.velocity.y);
+    animator.SetFloat("xSpeed",  Mathf.Abs(rigidbody2d.velocity.x));
+    animator.SetFloat("ySpeed", rigidbody2d.velocity.y);
   }
 
 	// Update is called once per frame.
@@ -217,12 +228,12 @@ public class Player : MonoBehaviour {
 		}
 
 		// Set X velocity.
-		rigidbody2D.velocity = new Vector2(xVel, rigidbody2D.velocity.y);
+		rigidbody2d.velocity = new Vector2(xVel, rigidbody2d.velocity.y);
 	}
 
 	// Set the Y velocity for the player.
 	public void SetYVelocity(float yVel) {
-		rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, yVel);
+		rigidbody2d.velocity = new Vector2(rigidbody2d.velocity.x, yVel);
 	}
 
 	// Check if the player is allowed to change between walking and running while in the air.
@@ -267,7 +278,7 @@ public class Player : MonoBehaviour {
 		// If player is on a moving platform...
 		if (OnMovingPlatform()) {
 			// ... get the platform's X velocity.
-			float xVel = GetPlatform().rigidbody2D.velocity.x;
+			float xVel = GetPlatform().GetComponent<Rigidbody2D>().velocity.x;
 			// If the player is moving left while the platform is moving to the left or when the player is moving to the right and the platform is moving to the right...
 			if ((hor < 0 && xVel < 0) || (hor > 0 && xVel > 0)) {
 				// ... add the platform's velocity to the speed of the player.

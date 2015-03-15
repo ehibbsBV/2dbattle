@@ -44,8 +44,8 @@ public class PlayerLadder : MonoBehaviour {
 			// Create the variables used to check if the player is almost falling off the ladder.
 			bool stillOnLadder = true;
 			Vector2 pos = transform.position;
-			Vector2 pointA = new Vector2(pos.x + boxCollider.center.x - (boxCollider.size.x / 2), pos.y + boxCollider.center.y - (boxCollider.size.y / 2));
-			Vector2 pointB = new Vector2(pos.x + boxCollider.center.x + (boxCollider.size.x / 2), pos.y + boxCollider.center.y + (boxCollider.size.y / 2));
+			Vector2 pointA = new Vector2(pos.x + boxCollider.offset.x - (boxCollider.size.x / 2), pos.y + boxCollider.offset.y - (boxCollider.size.y / 2));
+			Vector2 pointB = new Vector2(pos.x + boxCollider.offset.x + (boxCollider.size.x / 2), pos.y + boxCollider.offset.y + (boxCollider.size.y / 2));
 
 			// If the player is moving down and movement down is allowed...
 			if (v < 0 && ladder.allowDown) {
@@ -161,8 +161,8 @@ public class PlayerLadder : MonoBehaviour {
 	void Update () {
 		// Check if the player's hitbox collides with a ladder.
 		Vector2 pos = transform.position;
-		Vector2 pointA = new Vector2(pos.x + boxCollider.center.x - (boxCollider.size.x / 2), pos.y + boxCollider.center.y - (boxCollider.size.y / 2));
-		Vector2 pointB = new Vector2(pos.x + boxCollider.center.x + (boxCollider.size.x / 2), pos.y + boxCollider.center.y + (boxCollider.size.y / 2));
+		Vector2 pointA = new Vector2(pos.x + boxCollider.offset.x - (boxCollider.size.x / 2), pos.y + boxCollider.offset.y - (boxCollider.size.y / 2));
+		Vector2 pointB = new Vector2(pos.x + boxCollider.offset.x + (boxCollider.size.x / 2), pos.y + boxCollider.offset.y + (boxCollider.size.y / 2));
 		hitLadder = Physics2D.OverlapArea(pointA, pointB, ladderLayer);
 
 		// If the player isn't currently on a ladder, there is a ladder collission and the player isn't falling, dashing, crouching, sliding or stuck on a wall...
