@@ -54,7 +54,7 @@ public class ConwayTests
 	}
 	
 	[Test]
-	public void testNextStepDowsntFillTheGrid ()
+	public void testNextStepDoesntFillTheGrid ()
 	{
 		Conway conway = new Conway (10, 6, 8, 3, 8, 10);
 		conway.NextIteration ();

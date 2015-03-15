@@ -18,8 +18,8 @@ namespace Acrocatic.Scripts.Environments.Generation
 			gridSize = size;
 			bBot = bornBot;
 			bTop = bornTop;
-			sTop = surviveTop;
 			sBot = surviveBot;
+			sTop = surviveTop;
 			cellGrid = GenerationUtils.GenerateSeed (gridSize, 10);
 		}
 		
@@ -142,12 +142,13 @@ namespace Acrocatic.Scripts.Environments.Generation
 						numLiveNeighbors++;
 				}
 			}
-		
+			// left
 			if (xPos > 0) {
 				if (cellGrid [xPos - 1, yPos] == CellStates.ALIVE)
 					numLiveNeighbors++;
 			}
-
+			
+			// right
 			if (xPos < gridSize - 1) {
 				if (cellGrid [xPos + 1, yPos] == CellStates.ALIVE)
 					numLiveNeighbors++;

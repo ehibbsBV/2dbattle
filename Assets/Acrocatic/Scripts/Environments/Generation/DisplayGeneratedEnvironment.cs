@@ -84,12 +84,11 @@ public class DisplayGeneratedEnvironment : MonoBehaviour
 		for (int col = 0; col < gridSize; col++) {
 			for (int row = 0; row < gridSize; row++) {
 				
+				// check if there's already a gameObject here
 				if (cellGrid [col, row] != null) {
-//					Debug.Log ("Item isn't null, destroying it.");
+					// if so, destroy it
 					Destroy (cellGrid [col, row]);
 					
-				} else {
-//					Debug.Log ("Item is null, leaving it alone.");
 				}
 				
 				if (conwayGrid.CellGrid [col, row] == CellStates.ALIVE) {
@@ -102,7 +101,7 @@ public class DisplayGeneratedEnvironment : MonoBehaviour
 			}
 		}
 		
-		PrintGridToConsole ();
+		//PrintGridToConsole ();
 	}
 	
 }
